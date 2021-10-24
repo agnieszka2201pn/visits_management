@@ -1,0 +1,10 @@
+{% extends 'base.html'%}
+
+{% block content %}
+    <ul>
+        {%  for meeting in meetings %}
+            <li> {{ meeting.organizer }} {{ meeting.visitors }} {{ meeting.room }}</li>
+                 {% endfor %}
+    </ul>
+
+{%  endblock %}

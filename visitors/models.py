@@ -24,17 +24,17 @@ class Visitor(models.Model):
     first_name = models.CharField(max_length=64)
     surname = models.CharField(max_length=64)
     contact_details = models.TextField(null=True)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    last_training_date = models.DateField(default=datetime.date.today)
+    company = models.ForeignKey(Company, on_delete=models.PROTECT)
+    last_training_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.first_name}, {self.surname}, company: {self.company}'
+        return f'{self.first_name} {self.surname}, company: {self.company}'
 
 
 class Comment(models.Model):
     content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    visitor = models.ForeignKey(Visitor, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.PROTECT)
+    visitor = models.ForeignKey(Visitor, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.content

@@ -1,0 +1,10 @@
+{% extends 'base.html'%}
+
+{% block content %}
+    <ul>
+        {%  for visitor in visitors %}
+            <li> {{ visitor }}</li>
+                 {% endfor %}
+    </ul>
+
+{%  endblock %}

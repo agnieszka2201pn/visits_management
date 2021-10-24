@@ -21,5 +21,8 @@ from visitors import views as v_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('mainview/', m_views.MainView.as_view(), name='main_view'),
-
+    path('meetings_list/', m_views.MeetingsListView.as_view(), name='meetings_list'),
+    path('add_meeting/', m_views.MeetingAddView.as_view(), name='add_meeting'),
+    path('add_visitor/', v_views.VisitorAddView.as_view(), name='add_visitor'),
+    path('visitors_list/', v_views.VisitorsListView.as_view(), name='visitors_list'),
 ]
