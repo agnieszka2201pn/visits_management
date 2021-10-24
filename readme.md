@@ -16,7 +16,7 @@ Could have:
 - define special needs regarding accomodation, meals, transportation, etc
 
 Views:
-- main view, welcome to application, links to: visit registration, list of visits
+- main view, welcome to application, links to: visit registration, list of visits and all other views
 - visit registration (access restricted to defined users-organizers)
 - list of visits, possible to filter by day, visitor, organizer, etc. Links to delete visit and update visit.
 - change, delete visit

@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from meetings import views as m_views
+from visitors import views as v_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('mainview/', m_views.MainView.as_view(), name='main_view'),
+
 ]
