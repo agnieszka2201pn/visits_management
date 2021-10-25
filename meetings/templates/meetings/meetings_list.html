@@ -4,10 +4,11 @@
     <ul>
         {%  for meeting in meetings %}
             <li>
+                Meeting number: {{ meeting.pk }}
                 Meeting date: {{ meeting.date }}
                 Responsible for the meeting: {{ meeting.organizer }} <br>
                 Expected visitors: {{ meeting.visitors.all}} <br>
-                Meeting room: {{ meeting.meeting_room.all}} <br>
+                Meeting room: {{ meeting.meeting_room}} <br>
                 Notes: {{ meeting.note }}
             </li>
                  {% endfor %}

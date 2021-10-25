@@ -20,6 +20,7 @@ departments = (
     (5, 'Supply Chain'),
     (6, 'Purchasing'),
 )
+
 class Organizer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     department = models.IntegerField(choices=departments)
@@ -32,7 +33,7 @@ class Meeting(models.Model):
     organizer = models.ForeignKey(Organizer, on_delete=models.PROTECT)
     date = models.DateField()
     visitors = models.ManyToManyField(Visitor)
-    meeting_room = models.ManyToManyField(MeetingRoom)
+    meeting_room = models.ForeignKey(MeetingRoom, on_delete=models.PROTECT)
     note = models.TextField()
 
     def __str__(self):

@@ -28,8 +28,9 @@ class MeetingAddView(FormView):
     def form_valid(self,form):
         cd = form.cleaned_data
         date = cd['date']
-        meeting = Meeting.objects.get(date=date)
+        meeting = Meeting.objects.filter(date=date)
         if meeting:
+            meeting = Meeting.objects.get(date=date)
             room = meeting.meeting_room
             if room == cd['meeting_room']:
                 return HttpResponse('this room is already booked')
@@ -51,4 +52,5 @@ class OrganizerAddView(FormView):
     def form_valid(self,form):
         form.save()
         return super().form_valid(form)
+
 

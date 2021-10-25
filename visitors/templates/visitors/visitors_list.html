@@ -3,7 +3,7 @@
 {% block content %}
     <ul>
         {%  for visitor in visitors %}
-            <li> {{ visitor }}</li>
+            <li> {{ visitor }}, last training: {{visitor.last_training_date}} {{visitor.comment_set.all}}</li>
                  {% endfor %}
     </ul>
 

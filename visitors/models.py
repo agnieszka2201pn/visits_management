@@ -3,6 +3,7 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import models
 
+
 company_types = (
     (1, 'our company'),
     (2, 'supplier'),
@@ -33,8 +34,9 @@ class Visitor(models.Model):
 
 class Comment(models.Model):
     content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.PROTECT)
+    author = models.ForeignKey('meetings.Organizer', on_delete=models.PROTECT)
     visitor = models.ForeignKey(Visitor, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.content
+
