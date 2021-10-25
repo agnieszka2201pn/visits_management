@@ -24,6 +24,9 @@ class Organizer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     department = models.IntegerField(choices=departments)
 
+    def __str__(self):
+        return f'{self.user.username} - {self.get_department_display()}'
+
 
 class Meeting(models.Model):
     organizer = models.ForeignKey(Organizer, on_delete=models.PROTECT)

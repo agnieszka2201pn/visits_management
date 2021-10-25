@@ -25,4 +25,6 @@ urlpatterns = [
     path('add_meeting/', m_views.MeetingAddView.as_view(), name='add_meeting'),
     path('add_visitor/', v_views.VisitorAddView.as_view(), name='add_visitor'),
     path('visitors_list/', v_views.VisitorsListView.as_view(), name='visitors_list'),
+    path('add_organizer/',  m_views.OrganizerAddView.as_view(), name='add_organizer'),
+    path('delete_meeting/<int:pk>/', m_views.MeetingDeleteView.as_view(), name='delete_meeting'),
 ]

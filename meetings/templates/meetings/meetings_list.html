@@ -3,7 +3,13 @@
 {% block content %}
     <ul>
         {%  for meeting in meetings %}
-            <li> {{ meeting.organizer }} {{ meeting.visitors }} {{ meeting.room }}</li>
+            <li>
+                Meeting date: {{ meeting.date }}
+                Responsible for the meeting: {{ meeting.organizer }} <br>
+                Expected visitors: {{ meeting.visitors.all}} <br>
+                Meeting room: {{ meeting.meeting_room.all}} <br>
+                Notes: {{ meeting.note }}
+            </li>
                  {% endfor %}
     </ul>
 

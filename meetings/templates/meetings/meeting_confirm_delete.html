@@ -1,0 +1,8 @@
+{%  extends 'base.html' %}
+{% block content %}
+    <form action="" method="post">
+    {% csrf_token %}
+   Do you really want to cancel this meeting? <br>
+    <input type="submit" value="Cancel">
+    </form>
+{% endblock %}
