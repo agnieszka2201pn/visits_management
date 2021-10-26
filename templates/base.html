@@ -4,11 +4,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <img src="{% static 'logo.jpeg' %}" alt="logo">
+    <img src="{% static 'companylogo.png' %}" alt="logo">
 </head>
 <body>
 {% block content %}
 {% endblock %}
 
+<ul>
+    <li> <a href="/meetings_list/"> See all meetings </a></li>
+    <li> <a href="/add_meeting/"> Add a new meeting </a></li>
+    <li> <a href="/add_visitor/"> Add new visitor to visitors list </a></li>
+    <li> <a href="/visitors_list/"> Check all visitors </a></li>
+    <li> <a href="/add_organizer/"> Add meeting organizer </a></li>
+    <li> <a href="/add_company/"> Add a new company </a></li>
+    <li> <a href="/mainview/"> Back to main page </a></li>
+    <li> <a href="/search_meeting/"> Search meeting </a></li>
+</ul>
 </body>
 </html>

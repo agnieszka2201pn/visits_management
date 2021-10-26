@@ -29,4 +29,5 @@ urlpatterns = [
     path('add_organizer/',  m_views.OrganizerAddView.as_view(), name='add_organizer'),
     path('add_company/', v_views.CompanyAddView.as_view(), name='add_company'),
     path('add_comment/', v_views.CommentAddView.as_view(), name='add_comment'),
+    path('search_meeting/', m_views.MeetingSearchList.as_view(), name='search_meeting'),
 ]

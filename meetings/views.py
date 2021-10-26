@@ -7,6 +7,10 @@ from django.views.generic.edit import FormView, DeleteView
 
 from meetings.forms import AddMeetingForm, OrganizerAddForm
 from meetings.models import Meeting
+from meetings.forms import MeetingSearchForm
+
+from search_views.search import SearchListView
+from search_views.filters import BaseFilter
 
 
 class MainView(View):
@@ -54,3 +58,18 @@ class OrganizerAddView(FormView):
         return super().form_valid(form)
 
 
+class MeetingFilter(BaseFilter):
+    search_fields = {
+        'search_organizer' : ['organizer'],
+        'search_date_from' : {'operator':'__gte', 'fields':['date']},
+        'search_date_to' : {'operator':'__lte', 'fields':['date']},
+        'search_visitors' : ['visitors'],
+        'search_meeting_room' : ['meeting_room'],
+    }
+
+
+class MeetingSearchList(SearchListView):
+    model = Meeting
+    template_name = 'meetings/meetings_search.html'
+    form_class = MeetingSearchForm
+    filter_class = MeetingFilter

@@ -1,18 +1,21 @@
 {% extends 'base.html'%}
 
 {% block content %}
+    Search meeting by: <br>
+    <form action="" method="GET">
+    {{ form.as_p }}
+        <input type="submit" value="Search Meeting">
+    </form>
     <ul>
-        {%  for meeting in meetings %}
+        {%  for meeting in meeting_list %}
             <li>
                 Meeting number: {{ meeting.pk }}
                 Meeting date: {{ meeting.date }}
                 Responsible for the meeting: {{ meeting.organizer }} <br>
                 Expected visitors: {{ meeting.visitors.all}} <br>
                 Meeting room: {{ meeting.meeting_room}} <br>
-                Notes: {{ meeting.note }}<br>
                 <a href="/delete_meeting/{{ meeting.pk }}/"> Cancel this meeting </a>
             </li>
                  {% endfor %}
     </ul>
-
 {%  endblock %}

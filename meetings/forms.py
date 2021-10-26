@@ -1,6 +1,7 @@
 from django.forms import ModelForm
+from django import forms
 
-from meetings.models import Meeting, Organizer
+from meetings.models import Meeting, Organizer, MeetingRoom
 
 
 class AddMeetingForm(ModelForm):
@@ -13,3 +14,10 @@ class OrganizerAddForm(ModelForm):
     class Meta:
         model = Organizer
         fields = ['user', 'department']
+
+class MeetingSearchForm(forms.Form):
+    organizer = forms.CharField(required=False)
+    date_from = forms.DateField(required=False)
+    date_to = forms.DateField(required=False)
+    visitors = forms.CharField(required=False)
+    meeting_room = forms.CharField(required=False)

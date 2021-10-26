@@ -3,8 +3,10 @@
 {% block content %}
     <ul>
         {%  for visitor in visitors %}
-            <li> {{ visitor }}, last training: {{visitor.last_training_date}} {{visitor.comment_set.all}}</li>
+            <li> {{ visitor }}, last training: {{visitor.last_training_date}} {{visitor.comment_set.all}} <br>
+                <a href="/add_comment/"> Add a new comment </a> </li>
                  {% endfor %}
+
     </ul>
 
 {%  endblock %}
