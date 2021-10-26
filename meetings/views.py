@@ -60,11 +60,12 @@ class OrganizerAddView(FormView):
 
 class MeetingFilter(BaseFilter):
     search_fields = {
-        'search_organizer' : ['organizer'],
-        'search_date_from' : {'operator':'__gte', 'fields':['date']},
-        'search_date_to' : {'operator':'__lte', 'fields':['date']},
-        'search_visitors' : ['visitors'],
-        'search_meeting_room' : ['meeting_room'],
+        'organizer' : ['organizer__user__username'],
+        'date_from' : {'operator':'__gte', 'fields':['date']},
+        'date_to' : {'operator':'__lte', 'fields':['date']},
+        'visitors' : ['visitors__surname'],
+        'visiting_company': ['visitors__company__name'],
+        'meeting_room' : ['meeting_room__name'],
     }
 
 

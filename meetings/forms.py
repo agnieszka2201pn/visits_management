@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django import forms
 
@@ -20,4 +21,5 @@ class MeetingSearchForm(forms.Form):
     date_from = forms.DateField(required=False)
     date_to = forms.DateField(required=False)
     visitors = forms.CharField(required=False)
+    visiting_company = forms.CharField(required=False)
     meeting_room = forms.CharField(required=False)
