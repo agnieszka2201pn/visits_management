@@ -30,4 +30,5 @@ urlpatterns = [
     path('add_company/', v_views.CompanyAddView.as_view(), name='add_company'),
     path('add_comment/', v_views.CommentAddView.as_view(), name='add_comment'),
     path('search_meeting/', m_views.MeetingSearchList.as_view(), name='search_meeting'),
+    path('visitor_details/<int:pk>/',v_views.VisitorDetailView.as_view(), name='visitor_details' ),
 ]

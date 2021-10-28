@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormView
 from django.shortcuts import render
@@ -12,7 +13,7 @@ from visitors.models import Visitor
 class VisitorAddView(FormView):
     template_name = 'visitors/add_visitor.html'
     form_class = VisitorAddForm
-    success_url = reverse_lazy('main_view')
+    success_url = reverse_lazy('visitors_list')
 
     def form_valid(self,form):
         form.save()
@@ -24,6 +25,9 @@ class VisitorsListView(ListView):
     template_name = 'visitors/visitors_list.html'
     context_object_name = 'visitors'
 
+
+class VisitorDetailView(DetailView):
+    pass
 
 class CompanyAddView(FormView):
     template_name = 'visitors/add_company.html'
@@ -38,7 +42,7 @@ class CompanyAddView(FormView):
 class CommentAddView(FormView):
     template_name = 'visitors/add_comment.html'
     form_class = CommentAddForm
-    success_url = reverse_lazy('main_view')
+    success_url = reverse_lazy('visitors_list')
 
     def form_valid(self, form):
         form.save()

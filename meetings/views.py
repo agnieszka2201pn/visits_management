@@ -1,11 +1,14 @@
+import datetime
+
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormView, DeleteView
 
-from meetings.forms import AddMeetingForm, OrganizerAddForm
+from meetings.forms import OrganizerAddForm, MeetingAddForm
 from meetings.models import Meeting
 from meetings.forms import MeetingSearchForm
 
@@ -20,26 +23,30 @@ class MainView(View):
 
 class MeetingsListView(ListView):
     model = Meeting
+    paginate_by = 10
     template_name = 'meetings/meetings_list.html'
     context_object_name = 'meetings'
 
 
 class MeetingAddView(FormView):
     template_name = 'meetings/add_meeting.html'
-    form_class = AddMeetingForm
+    form_class = MeetingAddForm
     success_url = reverse_lazy('meetings_list')
 
     def form_valid(self,form):
         cd = form.cleaned_data
         date = cd['date']
-        meeting = Meeting.objects.filter(date=date)
-        if meeting:
-            meeting = Meeting.objects.get(date=date)
-            room = meeting.meeting_room
-            if room == cd['meeting_room']:
-                return HttpResponse('this room is already booked')
+        if date < datetime.date.today():
+            return HttpResponse('you cannot organize a meeting in the past')
         else:
-            form.save()
+            meeting = Meeting.objects.filter(date=date)
+            if meeting:
+                meeting = Meeting.objects.get(date=date)
+                room = meeting.meeting_room
+                if room == cd['meeting_room']:
+                    return HttpResponse('this room is already booked')
+            else:
+                form.save()
         return super().form_valid(form)
 
 
@@ -63,7 +70,7 @@ class MeetingFilter(BaseFilter):
         'organizer' : ['organizer__user__username'],
         'date_from' : {'operator':'__gte', 'fields':['date']},
         'date_to' : {'operator':'__lte', 'fields':['date']},
-        'visitors' : ['visitors__surname'],
+        'visitors' : ['visitors__surname', 'visitors__first_name'],
         'visiting_company': ['visitors__company__name'],
         'meeting_room' : ['meeting_room__name'],
     }
@@ -74,3 +81,5 @@ class MeetingSearchList(SearchListView):
     template_name = 'meetings/meetings_search.html'
     form_class = MeetingSearchForm
     filter_class = MeetingFilter
+
+

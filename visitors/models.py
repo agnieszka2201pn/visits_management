@@ -29,7 +29,7 @@ class Visitor(models.Model):
     last_training_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return f'company: {self.company}, {self.first_name} {self.surname}'
+        return f'{self.company}, {self.first_name} {self.surname}'
 
 
 class Comment(models.Model):

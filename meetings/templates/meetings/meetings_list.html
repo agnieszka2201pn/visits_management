@@ -10,7 +10,8 @@
                 Expected visitors: {{ meeting.visitors.all}} <br>
                 Meeting room: {{ meeting.meeting_room}} <br>
                 Notes: {{ meeting.note }}<br>
-                <a href="/delete_meeting/{{ meeting.pk }}/"> Cancel this meeting </a>
+                <a href="/delete_meeting/{{ meeting.pk }}/"> Cancel this meeting </a> <br>
+                <a href="/visitors_list/"> Want to learn more about your visitors? Click here </a>
             </li>
                  {% endfor %}
     </ul>

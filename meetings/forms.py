@@ -5,7 +5,7 @@ from django import forms
 from meetings.models import Meeting, Organizer, MeetingRoom
 
 
-class AddMeetingForm(ModelForm):
+class MeetingAddForm(ModelForm):
     class Meta:
         model = Meeting
         fields = ['organizer', 'date', 'visitors', 'meeting_room', 'note']
