@@ -4,6 +4,7 @@
     <ul>
         {%  for visitor in visitors %}
             <li> {{ visitor }}, last training: {{visitor.last_training_date}} {{visitor.comment_set.all}} <br>
+                 <a href="/update_visitor/{{visitor.pk}}"> Update information about visitor </a>
                 <a href="/add_comment/"> Add a new comment </a> </li>
                  {% endfor %}
 

@@ -6,14 +6,14 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView
 from django.views.generic.list import ListView
-from django.views.generic.edit import FormView, DeleteView
+from django.views.generic.edit import FormView, DeleteView, UpdateView
+
+from search_views.search import SearchListView
+from search_views.filters import BaseFilter
 
 from meetings.forms import OrganizerAddForm, MeetingAddForm
 from meetings.models import Meeting
 from meetings.forms import MeetingSearchForm
-
-from search_views.search import SearchListView
-from search_views.filters import BaseFilter
 
 
 class MainView(View):
@@ -55,13 +55,26 @@ class MeetingDeleteView(DeleteView):
     success_url = reverse_lazy('meetings_list')
 
 
-class OrganizerAddView(FormView):
-    template_name = 'meetings/add_organizer.html'
-    form_class = OrganizerAddForm
+class MeetingUpdate(UpdateView):
+    model = Meeting
+    fields = ['organizer', 'date', 'visitors', 'meeting_room', 'note']
+    template_name_suffix = '_update_form'
     success_url = reverse_lazy('meetings_list')
 
     def form_valid(self,form):
-        form.save()
+        cd = form.cleaned_data
+        date = cd['date']
+        if date < datetime.date.today():
+            return HttpResponse('you cannot organize a meeting in the past')
+        else:
+            meeting = Meeting.objects.filter(date=date)
+            if meeting:
+                meeting = Meeting.objects.get(date=date)
+                room = meeting.meeting_room
+                if room == cd['meeting_room']:
+                    return HttpResponse('this room is already booked')
+            else:
+                form.save()
         return super().form_valid(form)
 
 
@@ -83,3 +96,12 @@ class MeetingSearchList(SearchListView):
     filter_class = MeetingFilter
 
 
+
+class OrganizerAddView(FormView):
+    template_name = 'meetings/add_organizer.html'
+    form_class = OrganizerAddForm
+    success_url = reverse_lazy('meetings_list')
+
+    def form_valid(self,form):
+        form.save()
+        return super().form_valid(form)
