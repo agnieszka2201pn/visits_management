@@ -28,8 +28,11 @@ class Visitor(models.Model):
     company = models.ForeignKey(Company, on_delete=models.PROTECT)
     last_training_date = models.DateField(null=True, blank=True)
 
+    class Meta:
+        ordering = ('surname',)
+
     def __str__(self):
-        return f'{self.company}, {self.first_name} {self.surname}'
+        return f'{self.surname} {self.first_name}'
 
 
 class Comment(models.Model):

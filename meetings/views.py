@@ -80,12 +80,12 @@ class MeetingUpdate(UpdateView):
 
 class MeetingFilter(BaseFilter):
     search_fields = {
-        'organizer' : ['organizer__user__username'],
+        'organizer' : ['organizer__pk'],
         'date_from' : {'operator':'__gte', 'fields':['date']},
         'date_to' : {'operator':'__lte', 'fields':['date']},
-        'visitors' : ['visitors__surname', 'visitors__first_name'],
-        'visiting_company': ['visitors__company__name'],
-        'meeting_room' : ['meeting_room__name'],
+        'visitors' : ['visitors__pk'],
+        'visiting_company': ['visitors__company__pk'],
+        'meeting_room' : ['meeting_room__pk'],
     }
 
 

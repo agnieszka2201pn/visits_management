@@ -20,11 +20,9 @@ class CommentAddForm(ModelForm):
     class Meta:
         model = Comment
         fields = ['content', 'author', 'visitor']
-
+        widgets = {'visitor':forms.widgets.HiddenInput}
 
 class VisitorSearchForm(forms.Form):
-    first_name = forms.CharField(required=False)
-    surname = forms.DateField(required=False)
-    contact_details = forms.DateField(required=False)
-    company = forms.CharField(required=False)
-    last_training_date = forms.CharField(required=False)
+    name = forms.ModelChoiceField(required=False, queryset=Visitor.objects.all())
+    company = forms.ModelChoiceField(required=False, queryset=Company.objects.all())
+    last_training_date = forms.DateField(required=False)

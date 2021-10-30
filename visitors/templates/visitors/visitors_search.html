@@ -14,9 +14,12 @@
                 Contact details: {{ visitor.contact_details }} <br>
                 Company: {{ visitor.company }} <br>
                 Last training date: {{ visitor.last_training_date}} <br>
-                Comments: {{ visitor.comment_set.all}}
+                Comments:
+                {% for comment in visitor.comment_set.all %}
+                {{ comment }}
+                {% endfor %}
                 <a href="/update_visitor/{{visitor.pk}}"> Update information about visitor </a>
-                <a href="/add_comment/"> Add a new comment </a> </li>
+                <a href="/add_comment/{{visitor.pk}}"> Add a new comment </a> </li>
             </li>
                  {% endfor %}
     </ul>

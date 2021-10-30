@@ -51,6 +51,12 @@ class CommentAddView(FormView):
     form_class = CommentAddForm
     success_url = reverse_lazy('visitors_list')
 
+    def get_initial(self):
+        initial_data = super().get_initial()
+        initial_data['visitor'] = self.kwargs['pk']
+        return initial_data
+
+
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
@@ -58,10 +64,8 @@ class CommentAddView(FormView):
 
 class VisitorFilter(BaseFilter):
     search_fields = {
-        'first_name' : ['first_name'],
-        'surname' : ['surname'],
-        'contact_details': ['contact_details'],
-        'company': ['company'],
+        'name' : ['id'],
+        'company': ['company__pk'],
         'last_training_date' : {'operator':'__gte', 'fields':['last_training_date']},
     }
 

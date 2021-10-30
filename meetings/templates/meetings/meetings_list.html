@@ -7,7 +7,10 @@
                 Meeting number: {{ meeting.pk }}
                 Meeting date: {{ meeting.date }}
                 Responsible for the meeting: {{ meeting.organizer }} <br>
-                Expected visitors: {{ meeting.visitors.all}} <br>
+                Expected visitors:
+                {% for visitor in meeting.visitors.all %}
+                    {{ visitor }}
+                    {%  endfor %}<br>
                 Meeting room: {{ meeting.meeting_room}} <br>
                 Notes: {{ meeting.note }}<br>
                 <a href="/delete_meeting/{{ meeting.pk }}/"> Cancel this meeting </a> <br>
