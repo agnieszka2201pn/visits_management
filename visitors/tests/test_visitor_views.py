@@ -2,7 +2,7 @@ import pytest
 from django.contrib.auth.models import User
 
 from visitors.models import Company, Visitor, Comment
-from meetings.models import Organizer
+from meetings.models import Organizer, Meeting, MeetingRoom
 
 @pytest.mark.django_db
 def test_company_add_view(client):
@@ -39,3 +39,15 @@ def test_comment_add_view(client):
     response = client.post(url, { 'content' : 'fake_comment','author': author.pk, 'visitor': visitor.pk})
     assert response.status_code == 302
     assert Comment.objects.count() == 1
+
+
+@pytest.mark.django_db
+def test_visitors_list_view(visitors, client):
+    url = '/visitors_list/'
+    response = client.get(url)
+    assert response.status_code == 200
+    list_view = list(response.context['visitors'].values_list('pk', flat=True))
+    list_db = list(Visitor.objects.all().values_list('pk', flat=True))
+    assert list_view == list_db
+
+
