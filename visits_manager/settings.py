@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'meetings.apps.MeetingsConfig',
     'visitors.apps.VisitorsConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

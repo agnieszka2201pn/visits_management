@@ -29,10 +29,10 @@ class Visitor(models.Model):
     last_training_date = models.DateField(null=True, blank=True)
 
     class Meta:
-        ordering = ('surname',)
+        ordering = ('company__name',)
 
     def __str__(self):
-        return f'{self.surname} {self.first_name}'
+        return f'{self.company}, {self.first_name} {self.surname}'
 
 
 class Comment(models.Model):

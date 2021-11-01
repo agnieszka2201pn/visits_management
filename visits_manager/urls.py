@@ -33,4 +33,8 @@ urlpatterns = [
     path('search_meeting/', m_views.MeetingSearchList.as_view(), name='search_meeting'),
     path('update_visitor/<int:pk>/',v_views.UpdateVisitor.as_view(), name='update_visitor'),
     path('search_visitor/', v_views.VisitorSearchList.as_view(), name='search_visitor'),
+    path('meetings_api/<int:pk>/', m_views.MeetingView.as_view(), name='meeting_api'),
+    path('meetings_list_api/', m_views.MeetingListApi.as_view(), name='meetings_list_api'),
+    path('visitors_api/<int:pk>/', v_views.VisitorView.as_view(), name='visitors_api'),
+    path('visitors_list_api/', v_views.VisitorListApi.as_view(), name='visitors_list_api'),
 ]

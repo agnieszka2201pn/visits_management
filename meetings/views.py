@@ -4,16 +4,18 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormView, DeleteView, UpdateView
 
 from search_views.search import SearchListView
 from search_views.filters import BaseFilter
 
+from rest_framework import generics
+
 from meetings.forms import OrganizerAddForm, MeetingAddForm
 from meetings.models import Meeting
 from meetings.forms import MeetingSearchForm
+from meetings.serializers import MeetingSerializer
 
 
 class MainView(View):
@@ -120,3 +122,13 @@ class OrganizerAddView(FormView):
     def form_valid(self,form):
         form.save()
         return super().form_valid(form)
+
+
+class MeetingListApi(generics.ListCreateAPIView):
+    queryset = Meeting.objects.all()
+    serializer_class = MeetingSerializer
+
+
+class MeetingView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Meeting.objects.all()
+    serializer_class = MeetingSerializer

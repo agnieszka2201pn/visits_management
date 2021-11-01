@@ -9,8 +9,11 @@ from django.shortcuts import render
 from search_views.search import SearchListView
 from search_views.filters import BaseFilter
 
+from rest_framework import generics
+
 from visitors.forms import VisitorAddForm, CompanyAddForm, CommentAddForm, VisitorSearchForm
 from visitors.models import Visitor
+from visitors.serializers import VisitorSerializer
 
 
 class VisitorAddView(FormView):
@@ -75,3 +78,13 @@ class VisitorSearchList(SearchListView):
     template_name = 'visitors/visitors_search.html'
     form_class = VisitorSearchForm
     filter_class = VisitorFilter
+
+
+class VisitorView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Visitor.objects.all()
+    serializer_class = VisitorSerializer
+
+
+class VisitorListApi(generics.ListCreateAPIView):
+    queryset = Visitor.objects.all()
+    serializer_class = VisitorSerializer
