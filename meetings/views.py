@@ -39,12 +39,14 @@ class MeetingAddView(FormView):
         if date < datetime.date.today():
             return HttpResponse('you cannot organize a meeting in the past')
         else:
-            meeting = Meeting.objects.filter(date=date)
-            if meeting:
-                meeting = Meeting.objects.get(date=date)
-                room = meeting.meeting_room
-                if room == cd['meeting_room']:
-                    return HttpResponse('this room is already booked')
+            meetings = list(Meeting.objects.filter(date=date))
+            rooms = []
+            if meetings:
+                for meeting in meetings:
+                    room = meeting.meeting_room
+                    rooms.append(room)
+            if cd['meeting_room'] in rooms:
+                return HttpResponse('this room is already booked')
             else:
                 form.save()
         return super().form_valid(form)
@@ -61,20 +63,33 @@ class MeetingUpdate(UpdateView):
     template_name_suffix = '_update_form'
     success_url = reverse_lazy('meetings_list')
 
+    def get_initial(self):
+        initial_data = super().get_initial()
+        initial_data['meeting.pk'] = self.kwargs['pk']
+        return initial_data
+
     def form_valid(self,form):
         cd = form.cleaned_data
         date = cd['date']
         if date < datetime.date.today():
             return HttpResponse('you cannot organize a meeting in the past')
         else:
-            meeting = Meeting.objects.filter(date=date)
-            if meeting:
-                meeting = Meeting.objects.get(date=date)
-                room = meeting.meeting_room
-                if room == cd['meeting_room']:
-                    return HttpResponse('this room is already booked')
-            else:
+            pk = self.get_initial()['meeting.pk']
+            meeting = Meeting.objects.get(pk=pk)
+            if cd['meeting_room'] == meeting.meeting_room:
                 form.save()
+            else:
+                meetings = Meeting.objects.filter(date=date)
+                rooms = []
+                if meetings:
+                    for meeting in meetings:
+                        room = meeting.meeting_room
+                        rooms.append(room)
+                if cd['meeting_room'] in rooms:
+                    return HttpResponse('this room is already booked')
+                else:
+                    form.save()
+
         return super().form_valid(form)
 
 

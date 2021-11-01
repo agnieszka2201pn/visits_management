@@ -28,3 +28,40 @@ def test_meetings_list_view(meetings, client):
     list_view = list(response.context['meetings'].values_list('pk', flat=True))
     list_db = list(Meeting.objects.all().values_list('pk', flat=True))
     assert list_view == list_db
+
+
+@pytest.mark.django_db
+def test_meeting_delete_view(meetings, client):
+    count_before = Meeting.objects.count()
+    meeting = Meeting.objects.get(pk=1)
+    url = f'/delete_meeting/{meeting.id}/'
+    response = client.delete(url, {'pk':meeting.id})
+    assert response.status_code == 302
+    count_after = Meeting.objects.count()
+    assert count_before == count_after + 1
+
+
+@pytest.mark.django_db
+def test_organizer_add_view(client):
+    url = '/add_organizer/'
+    user = User.objects.create(username='new_user')
+    response = client.post(url, {'user':user.pk,
+                                 'department':1})
+    assert response.status_code == 302
+    assert Organizer.objects.count() == 1
+
+
+# @pytest.mark.django_db
+# def test_meeting_update_view(meetings, client):
+#     meeting = Meeting.objects.get(pk=1)
+#     url = f'/update_meeting/{meeting.id}/'
+#     response = client.get(url, {}, format='json')
+#     meeting_data = response.data
+#     new_note = 'new note'
+#     meeting_data['note'] = new_note
+#     response = client.patch(url, meeting_data, format='json')
+#     changed_meeting = Meeting.objects.get(pk=meeting.pk)
+#     assert changed_meeting.note == 'new note'
+#     assert response.status_code == 302
+
+
