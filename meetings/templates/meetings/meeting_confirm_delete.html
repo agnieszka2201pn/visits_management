@@ -1,8 +1,10 @@
 {%  extends 'base.html' %}
-{% block content %}
+{% block form %}
+    <div class="mb-3 mt-3 form-control">
     <form action="" method="post">
     {% csrf_token %}
    Do you really want to cancel this meeting? <br>
     <input type="submit" value="Cancel">
     </form>
+    </div>
 {% endblock %}

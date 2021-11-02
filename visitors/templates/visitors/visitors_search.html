@@ -1,11 +1,15 @@
 {% extends 'base.html'%}
 
-{% block content %}
+{% block form %}
+    <div class="mb-3 mt-3 form-control">
     <form action="" method="GET">
     Search visitor by: <br>
     {{ form.as_p }}
         <input type="submit" value="Search Visitor">
     </form>
+    </div>
+{% endblock %}
+{% block content %}
     <ul>
         {%  for visitor in visitor_list %}
             <li>

@@ -1,6 +1,7 @@
 {% extends 'base.html'%}
 
-{% block content %}
+{% block form %}
+    <div class="mb-3 mt-3 form-control">
     <form action="" method="POST">
     {% csrf_token %}
     {{ form.as_p }}
@@ -8,5 +9,5 @@
     </form>
                 <a href="/delete_meeting/{{ meeting.pk }}/"> Cancel this meeting </a> <br>
 {#                <a href="/visitors_list/"> Want to learn more about your visitors? Click here </a>#}
-
+    </div>
 {%  endblock %}

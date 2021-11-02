@@ -1,23 +1,38 @@
 {% extends 'base.html'%}
 
 {% block content %}
-    <ul>
+    <table class="table table-striped"}>
+        <thead>
+        <tr>
+            <th>Meeting number</th>
+            <th>Meeting date </th>
+            <th>Responsible for the meeting</th>
+            <th>Expected visitors</th>
+            <th>Meeting room</th>
+            <th>Notes</th>
+            <th>Useful links</th>
+        </tr>
+        </thead>
+        <tbody>
         {%  for meeting in meetings %}
-            <li>
-                Meeting number: {{ meeting.pk }}
-                Meeting date: {{ meeting.date }}
-                Responsible for the meeting: {{ meeting.organizer }} <br>
-                Expected visitors:
+                <tr>
+                <td> {{ meeting.pk }} </td>
+                <td> {{ meeting.date }} </td>
+                <td> {{ meeting.organizer }}</td>
+                <td>
                 {% for visitor in meeting.visitors.all %}
                     {{ visitor }}
-                    {%  endfor %}<br>
-                Meeting room: {{ meeting.meeting_room}} <br>
-                Notes: {{ meeting.note }}<br>
+                    {% endfor %}
+                <a href="/visitors_list/"> Want to learn more about your visitors? Click here </a>
+                </td>
+                    <td>{{ meeting.meeting_room}} </td>
+                    <td> {{ meeting.note }}</td>
+                <td>
                 <a href="/delete_meeting/{{ meeting.pk }}/"> Cancel this meeting </a> <br>
                 <a href="/update_meeting/{{ meeting.pk }}/" > Update meeting information</a> <br>
-                <a href="/visitors_list/"> Want to learn more about your visitors? Click here </a>
-            </li>
-                 {% endfor %}
-    </ul>
 
+                </td>
+                 {% endfor %}
+    </tbody>
+   </table>
 {%  endblock %}

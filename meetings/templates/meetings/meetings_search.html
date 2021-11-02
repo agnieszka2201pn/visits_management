@@ -1,25 +1,46 @@
 {% extends 'base.html'%}
 
-{% block content %}
+{% block form %}
+    <div class="mb-3 mt-3 form-control">
     <form action="" method="GET">
     Search meeting by: <br>
     {{ form.as_p }}
         <input type="submit" value="Search Meeting">
     </form>
-    <ul>
-        {%  for meeting in meeting_list %}
-            <li>
-                Meeting number: {{ meeting.pk }}
-                Meeting date: {{ meeting.date }}
-                Responsible for the meeting: {{ meeting.organizer }} <br>
-                Expected visitors:
+    </div>
+{% endblock %}
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Meeting number</th>
+            <th>Meeting date </th>
+            <th>Responsible for the meeting</th>
+            <th>Expected visitors</th>
+            <th>Meeting room</th>
+            <th>Notes</th>
+            <th>Useful links</th>
+        </tr>
+        </thead>
+            <tbody>
+            {%  for meeting in meeting_list %}
+                <tr>
+                <td> {{ meeting.pk }} </td>
+                <td> {{ meeting.date }} </td>
+                <td> {{ meeting.organizer }}</td>
+                <td>
                 {% for visitor in meeting.visitors.all %}
                     {{ visitor }}
-                    {% endfor %} <br>
-                Meeting room: {{ meeting.meeting_room}} <br>
-                <a href="/delete_meeting/{{ meeting.pk }}/"> Cancel this meeting </a>
-                <a href="/update_meeting/{{ meeting.pk }}/" > Update meeting information</a> <br>
-            </li>
+                    {% endfor %}
+                </td>
+                    <td>{{ meeting.meeting_room}} </td>
+                    <td> {{ meeting.note }}</td>
+                <td>
+                <a href="/delete_meeting/{{ meeting.pk }}/"> Cancel this meeting </a><br>
+                <a href="/update_meeting/{{ meeting.pk }}/" > Update meeting information</a>
+                </td>
+                </tr>
                  {% endfor %}
-    </ul>
+            </tbody>
+    </table>
 {%  endblock %}
