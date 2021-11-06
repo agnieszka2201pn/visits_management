@@ -10,21 +10,39 @@
     </div>
 {% endblock %}
 {% block content %}
-    <ul>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th> Name </th>
+            <th> Surname </th>
+            <th> Contact details </th>
+            <th> Company </th>
+            <th> Last training date </th>
+            <th> Comments </th>
+            <th> Useful links </th>
+        </tr>
+        </thead>
+        <tbody>
         {%  for visitor in visitor_list %}
-            <li>
-                Visitor name: {{ visitor.first_name }}
-                Visitor surname: {{ visitor.surname }}
-                Contact details: {{ visitor.contact_details }} <br>
-                Company: {{ visitor.company }} <br>
-                Last training date: {{ visitor.last_training_date}} <br>
-                Comments:
+            <tr>
+                <td> {{ visitor.first_name }} </td>
+                <td> {{ visitor.surname }} </td>
+                <td> {{ visitor.contact_details }} </td>
+                <td> {{ visitor.company }} </td>
+                <td> {{ visitor.last_training_date}} </td>
+                <td>
                 {% for comment in visitor.comment_set.all %}
                 {{ comment }}
+                {% empty %}
+                There are no comments for this visitor.
                 {% endfor %}
-                <a href="/update_visitor/{{visitor.pk}}"> Update information about visitor </a>
+                </td>
+                <td>
+                <a href="/update_visitor/{{visitor.pk}}"> Update information about visitor </a> <br>
                 <a href="/add_comment/{{visitor.pk}}"> Add a new comment </a> </li>
-            </li>
+                </td>
+            </tr>
                  {% endfor %}
-    </ul>
+        </tbody>
+    </table>
 {%  endblock %}
