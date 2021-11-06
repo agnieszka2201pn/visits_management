@@ -20,15 +20,18 @@ def visitors():
     visitor1 = Visitor.objects.create(first_name='name1',
                                       surname='surname1',
                                       contact_details='name1@gmail.com',
-                                      company = company1)
+                                      company = company1,
+                                      last_training_date=datetime.today().strftime('%Y-%m-%d'))
     visitor2 = Visitor.objects.create(first_name='name2',
                                       surname='surname2',
                                       contact_details='name2@gmail.com',
-                                      company = company1)
+                                      company = company1,
+                                      last_training_date=datetime.today().strftime('%Y-%m-%d'))
     visitor3 = Visitor.objects.create(first_name='name3',
                                       surname='surname3',
                                       contact_details='name3@gmail.com',
-                                      company=company2)
+                                      company=company2,
+                                      last_training_date=datetime.today().strftime('%Y-%m-%d'))
     visitors = [visitor1, visitor2, visitor3]
     return visitors
 

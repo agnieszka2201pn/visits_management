@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pytest
 from django.contrib.auth.models import User
 
@@ -50,4 +52,24 @@ def test_visitors_list_view(visitors, client):
     list_db = list(Visitor.objects.all().values_list('pk', flat=True))
     assert list_view == list_db
 
+
+@pytest.mark.django_db
+def test_visitor_update_view(visitors, client):
+    visitor = visitors[0]
+    url = f'/update_visitor/{visitor.pk}/'
+    response_get = client.get(url)
+    visitor_data = response_get.context['form'].initial
+    visitor_data['first_name'] = 'new name'
+    visitor_data['last_training_date'] = datetime.today().strftime('%Y-%m-%d')
+    response = client.post(url, visitor_data)
+    changed_visitor = Visitor.objects.get(pk=visitor.pk)
+    assert changed_visitor.first_name == 'new name'
+    assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_visitor_search_view(visitors, client):
+    url = f'/search_visitor/'
+    response = client.get(url)
+    assert response.status_code == 200
 

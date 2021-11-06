@@ -25,7 +25,6 @@ class MainView(View):
 
 class MeetingsListView(ListView):
     model = Meeting
-    paginate_by = 10
     template_name = 'meetings/meetings_list.html'
     context_object_name = 'meetings'
 

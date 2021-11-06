@@ -29,7 +29,7 @@ def meetings():
                                       company=company2)
     meeting_room = MeetingRoom.objects.create(name='room1', size=10)
     note = 'fake meeting note'
-    date = "2021-10-31"
+    date = datetime.today().strftime('%Y-%m-%d')
     meeting1 = Meeting.objects.create(organizer=organizer1, date=date, meeting_room=meeting_room, note=note)
     meeting1.visitors.set([visitor1, visitor2])
     meeting2 =  Meeting.objects.create(organizer=organizer2, date=date, meeting_room=meeting_room, note=note)

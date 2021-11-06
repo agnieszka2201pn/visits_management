@@ -51,17 +51,17 @@ def test_organizer_add_view(client):
     assert Organizer.objects.count() == 1
 
 
-# @pytest.mark.django_db
-# def test_meeting_update_view(meetings, client):
-#     meeting = Meeting.objects.get(pk=1)
-#     url = f'/update_meeting/{meeting.id}/'
-#     response = client.get(url, {}, format='json')
-#     meeting_data = response.data
-#     new_note = 'new note'
-#     meeting_data['note'] = new_note
-#     response = client.patch(url, meeting_data, format='json')
-#     changed_meeting = Meeting.objects.get(pk=meeting.pk)
-#     assert changed_meeting.note == 'new note'
-#     assert response.status_code == 302
+@pytest.mark.django_db
+def test_meeting_update_view(meetings, client):
+    meeting = meetings[0]
+    url = f'/update_meeting/{meeting.pk}/'
+    response_get = client.get(url)
+    meeting_data = response_get.context['form'].initial
+    meeting_data['visitors'] = (1,2)
+    meeting_data['note'] = 'new note'
+    response = client.post(url, meeting_data)
+    changed_meeting = Meeting.objects.get(pk=meeting.pk)
+    assert changed_meeting.note == 'new note'
+    assert response.status_code == 302
 
 
