@@ -27,7 +27,7 @@ class VisitorAddView(FormView):
 
 
 class VisitorsListView(ListView):
-    model = Visitor
+    queryset = Visitor.objects.all().order_by('surname')
     template_name = 'visitors/visitors_list.html'
     context_object_name = 'visitors'
 
@@ -67,7 +67,7 @@ class CommentAddView(FormView):
 
 class VisitorFilter(BaseFilter):
     search_fields = {
-        'name' : ['id'],
+        'name' : ['pk'],
         'company': ['company__pk'],
         'last_training_date' : {'operator':'__gte', 'fields':['last_training_date']},
     }

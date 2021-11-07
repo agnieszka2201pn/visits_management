@@ -65,3 +65,13 @@ def test_meeting_update_view(meetings, client):
     assert response.status_code == 302
 
 
+@pytest.mark.django_db
+def test_meeting_search_view(meetings, client):
+    meeting1 = meetings[0]
+    organizer1 = meeting1.organizer
+    url = f'/search_meeting/'
+    response = client.get(url, {'organizer': organizer1.pk})
+    assert len(response.context_data['meeting_list']) == len(Meeting.objects.filter(organizer=organizer1.pk))
+    assert response.status_code == 200
+
+

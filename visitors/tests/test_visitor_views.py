@@ -69,7 +69,10 @@ def test_visitor_update_view(visitors, client):
 
 @pytest.mark.django_db
 def test_visitor_search_view(visitors, client):
+    visitor1 = visitors[0]
+    company = visitor1.company
     url = f'/search_visitor/'
-    response = client.get(url)
+    response = client.get(url, {'company': company.pk})
+    assert len(response.context_data['visitor_list']) == len(Visitor.objects.filter(company=company.pk))
     assert response.status_code == 200
 
