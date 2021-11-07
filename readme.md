@@ -1,34 +1,31 @@
-#visits_management
+Project name: Visits Manager.
 
-Idea: In my company there are many external visitors: guests, auditors, external services, authorities, etc. It is difficult to manage them so that the visits do not coincide. Too many visitors at the same time create chaos and organization challenge. This app should help to coordinate visits in the site.
+Idea: In my company there are many visits. Almost every day we host: guests, auditors, external services, authorities, etc. It is difficult to manage them so that the visits do not coincide. Too many visitors at the same time create chaos and organization challenge. This app should help to coordinate visits in the site.
 
-MAIN FUNCTIONS
-Must have:
+MAIN FUNCTIONS:
 - register upcoming visits
 - define person responsible for the visitor
-- define visit time
+- define visit date
 - assign conference room (if needed)
-- access: everybody can see registered visits, only defined employees can add new visits
-
-Could have:
-- sending email notification to the responsible person when the guest arrives
-- send visits for approval to the site manager
-- define special needs regarding accomodation, meals, transportation, etc
+- store important information about visitors
+- search meetings and visitors
+- access - no restrictions, all users can add or modify meetings
 
 Views:
-- main view, welcome to application, links to: visit registration, list of visits and all other views
-- visit registration (access restricted to defined users-organizers)
-- list of visits, possible to filter by day, visitor, organizer, etc. Links to delete visit and update visit.
-- change, delete visit
-- add, change, delete organizer (access - only superuser)
-- add, change, delete visitor
-- add, change, delete company
-- add, change, delete conference room
+- main view, welcome to application, links to other views
+- search meeting
+- search visitor
+- add a new meeting
+- add a new visitor
+- add meeting organizer
+- add a new company
+- back to main page
 
+Visits Manager consists of 2 applications:
+1. Meetings - models and views related to Meetings.
+2. Visitors - models and views related to Visitors.
 
-Models:
-- visit - organizer (OneToOne), visitor(many visitors to one visit), conference_room(ManyToMany, null=True), date (or start date, end date).
-- organizer - first_name, surname, function, phone number
-- visitor - first_name, surname, company(OneToOne), contact details, covid_cleared(boolean), last_training_date(default = date today).
-- company - name, type(choices, np. customer, supplier, authorities, auditor, other)
-- conference room - name, size
+API is available for meetings list, individual meeting, visitors list and individual visitor.
+
+There is also a test for each view.
+

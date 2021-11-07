@@ -10,7 +10,7 @@ class MeetingAddForm(ModelForm):
     class Meta:
         model = Meeting
         fields = ['organizer', 'date', 'visitors', 'meeting_room', 'note']
-
+        widgets = {'date': forms.widgets.SelectDateWidget}
 
 class OrganizerAddForm(ModelForm):
     class Meta:
