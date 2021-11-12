@@ -12,6 +12,7 @@ class MeetingAddForm(ModelForm):
         fields = ['organizer', 'date', 'visitors', 'meeting_room', 'note']
         widgets = {'date': forms.widgets.SelectDateWidget}
 
+
 class OrganizerAddForm(ModelForm):
     class Meta:
         model = Organizer
@@ -24,3 +25,8 @@ class MeetingSearchForm(forms.Form):
     visitors = forms.ModelChoiceField(required=False, queryset=Visitor.objects.all())
     visiting_company = forms.ModelChoiceField(required=False, queryset=Company.objects.all())
     meeting_room = forms.ModelChoiceField(required=False, queryset=MeetingRoom.objects.all())
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=64)
+    password = forms.CharField(max_length=64, widget=forms.PasswordInput)

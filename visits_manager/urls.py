@@ -37,4 +37,6 @@ urlpatterns = [
     path('meetings_list_api/', m_views.MeetingListApi.as_view(), name='meetings_list_api'),
     path('visitors_api/<int:pk>/', v_views.VisitorView.as_view(), name='visitors_api'),
     path('visitors_list_api/', v_views.VisitorListApi.as_view(), name='visitors_list_api'),
+    path('login/', m_views.LoginView.as_view(), name='login'),
+    path('logout/', m_views.LogoutView.as_view(), name='logout'),
 ]

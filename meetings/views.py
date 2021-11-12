@@ -1,20 +1,23 @@
 import datetime
 
-from django.http import HttpResponse
+from django import views
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormView, DeleteView, UpdateView
 
+from rest_framework import generics
+
 from search_views.search import SearchListView
 from search_views.filters import BaseFilter
 
-from rest_framework import generics
-
 from meetings.forms import OrganizerAddForm, MeetingAddForm
 from meetings.models import Meeting
-from meetings.forms import MeetingSearchForm
+from meetings.forms import MeetingSearchForm, LoginForm
 from meetings.serializers import MeetingSerializer
 
 
@@ -29,7 +32,9 @@ class MeetingsListView(ListView):
     context_object_name = 'meetings'
 
 
-class MeetingAddView(FormView):
+class MeetingAddView(PermissionRequiredMixin, FormView):
+    permission_required = 'meetings.add_meeting'
+    permission_denied_message = "you do not have permission to add meetings"
     template_name = 'meetings/add_meeting.html'
     form_class = MeetingAddForm
     success_url = reverse_lazy('meetings_list')
@@ -53,12 +58,16 @@ class MeetingAddView(FormView):
         return super().form_valid(form)
 
 
-class MeetingDeleteView(DeleteView):
+class MeetingDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'meetings.delete_meeting'
+    permission_denied_message = "you do not have permission to delete meetings"
     model = Meeting
     success_url = reverse_lazy('meetings_list')
 
 
-class MeetingUpdate(UpdateView):
+class MeetingUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = 'meetings.change_meeting'
+    permission_denied_message = "you do not have permission to update meetings"
     model = Meeting
     fields = ['organizer', 'date', 'visitors', 'meeting_room', 'note']
     template_name_suffix = '_update_form'
@@ -116,7 +125,7 @@ class MeetingSearchList(SearchListView):
 class OrganizerAddView(FormView):
     template_name = 'meetings/add_organizer.html'
     form_class = OrganizerAddForm
-    success_url = reverse_lazy('meetings_list')
+    success_url = reverse_lazy('main_view')
 
     def form_valid(self,form):
         form.save()
@@ -131,3 +140,31 @@ class MeetingListApi(generics.ListCreateAPIView):
 class MeetingView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Meeting.objects.all()
     serializer_class = MeetingSerializer
+
+
+class LoginView(views.View):
+    def get(self,request):
+        form = LoginForm()
+        return render(request, 'meetings/login.html', {'form':form})
+
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            username = cd['username']
+            password = cd['password']
+            user1 = authenticate(username=username, password=password)
+            if user1:
+                login(request,user1)
+                return HttpResponseRedirect('/mainview/')
+            else:
+                return HttpResponse('user does not exist')
+
+
+class LogoutView(views.View):
+    def get(self, request):
+        return render(request, 'meetings/logout.html')
+
+    def post(self, request):
+        logout(request)
+        return HttpResponseRedirect('/login/')
