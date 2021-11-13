@@ -9,7 +9,7 @@ MAIN FUNCTIONS:
 - assign conference room (if needed)
 - store important information about visitors
 - search meetings and visitors
-- access - no restrictions, all users can add or modify meetings
+- access: login required. There are 2 groups of users: with full access and with limited permissions.
 
 Views:
 - main view, welcome to application, links to other views
